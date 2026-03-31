@@ -27,27 +27,56 @@ git clone https://github.com/ruslanguns/vibevoice-app-turbo.git
 cd vibevoice-app-turbo
 ```
 
-### 2. Create a virtual environment
+### 2. Install VibeVoice (required for TTS/ASR)
+
+The VibeVoice models need the official package. Install it first:
 
 ```bash
+# Create a virtual environment
 python -m venv .venv
-source .venv/bin/activate  # Linux/macOS
-# .venv\Scripts\activate   # Windows
+
+# Activate it
+# Linux/macOS:
+source .venv/bin/activate
+# Windows:
+.venv\Scripts\activate
+
+# Install VibeVoice from GitHub
+pip install -e "git+https://github.com/microsoft/VibeVoice.git#egg=vibevoice[streamingtts]"
 ```
 
-### 3. Install dependencies
+> **Windows users:** Make sure you have CUDA toolkit installed (https://developer.nvidia.com/cuda-downloads) and PyTorch with CUDA support. Verify with: `python -c "import torch; print(torch.cuda.is_available())"`
+
+### 3. Install app dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. (Optional) Download experimental multilingual voices
+### 4. (Optional) Download experimental voices for more speaker variety
 
 ```bash
+# Linux/macOS:
 bash scripts/download_voices.sh
+
+# Windows (PowerShell):
+python -c "
+from huggingface_hub import snapshot_download
+snapshot_download('microsoft/VibeVoice-Realtime-0.5B', allow_patterns=['voices/*'])
+"
 ```
 
-### 5. Launch the application
+### 5. Generate a podcast demo 🎙️
+
+This generates a 2-speaker podcast about eBPF:
+
+```bash
+python scripts/generate_podcast.py
+```
+
+Output: `podcast_merged.wav` with host (Carter) and guest (Chloe) voices.
+
+### 6. Launch the full Gradio app
 
 ```bash
 python -m vibevoice_studio.main
