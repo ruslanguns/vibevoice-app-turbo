@@ -84,18 +84,19 @@ class TTSEngine:
         logger.info("Loading TTS model: %s", self.model_path)
 
         try:
-            from vibevoice import RealtimeTTSModel
-            self._model = RealtimeTTSModel.from_pretrained(
+            from transformers import AutoModel
+            self._model = AutoModel.from_pretrained(
                 self.model_path,
-                device=self.device,
-            )
-            logger.info("TTS model loaded via vibevoice package")
-        except ImportError:
-            logger.info(
-                "vibevoice package not installed. "
-                "Install with: pip install -e git+https://github.com/microsoft/VibeVoice.git#egg=vibevoice[streamingtts]"
-            )
-            raise
+                trust_remote_code=True,
+            ).to(self.device)
+            logger.info("TTS model loaded via transformers")
+        except Exception as e:
+            logger.error("Failed to load TTS model: %s", e)
+            raise RuntimeError(
+                f"Could not load TTS model '{self.model_path}'. "
+                f"Ensure you have a GPU with sufficient VRAM and the model is available. "
+                f"Original error: {e}"
+            ) from e
 
         self._model_loaded = True
 

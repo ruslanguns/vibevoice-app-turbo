@@ -67,5 +67,5 @@ class TestTTSEngine:
 
     def test_synthesize_raises_without_load(self) -> None:
         engine = TTSEngine()
-        with pytest.raises((AssertionError, AttributeError)):
+        with pytest.raises(RuntimeError):
             engine.synthesize("test")

@@ -123,6 +123,6 @@ def format_transcription_table(result: TranscriptionResult) -> str:
     lines.append(f"{'Time':>12} │ {'Speaker':>8} │ Content")
     lines.append("─" * 80)
     for seg in result.segments:
-        time_str = f"{seg.start:07.2f}-{seg.end:07.2f}"
+        time_str = f"{seg.start:.2f}-{seg.end:.2f}"
         lines.append(f"{time_str:>12} │ Speaker {seg.speaker:>2} │ {seg.content}")
     return "\n".join(lines)

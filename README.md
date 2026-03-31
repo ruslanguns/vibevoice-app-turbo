@@ -23,7 +23,7 @@ Built with [FastAPI](https://fastapi.tiangolo.com/) + [Gradio](https://gradio.ap
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/ruslan323/vibevoice-app-turbo.git
+git clone https://github.com/ruslanguns/vibevoice-app-turbo.git
 cd vibevoice-app-turbo
 ```
 
